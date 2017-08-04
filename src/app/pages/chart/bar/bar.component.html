@@ -1,0 +1,91 @@
+<section class="col-lg-8" *ngIf="barChartDataADC.length > 0">
+    <div class="box box-info direct-chat direct-chat-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">RE-Mote ADC</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
+                    <i class="fa fa-comments"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div style="display: block">
+                <canvas *ngIf="barChartDataADC.length > 0" baseChart [datasets]="barChartDataADC" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            </div>
+            <div class="direct-chat-contacts">
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>ADC1</th>
+                                <th>ADC3</th>
+                                <th>Battery</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of datas">
+                                <td>{{item.time | date: 'h:mma'}}</td>
+                                <td>{{item.adc1/1000}} </td>
+                                <td>{{item.adc3/100}} </td>
+                                <td>{{item.battery/1000}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="col-lg-4" *ngIf="barChartDataBattery.length > 0">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">RE-Mote Battery</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div style="display: block">
+                <canvas *ngIf="barChartDataBattery.length > 0" baseChart [datasets]="barChartDataBattery" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section class="col-lg-4">
+    <div class="box box-warning well">
+        <div class="box-header with-border">
+            <h3 class="box-title">RE-Mote ADC tracking</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Battery <strong>RE-Mote</strong></th>
+                            <th>Baatery <strong>z1</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of datas">
+                            <td>{{item.time |  date:'h:mma'}}</td>
+                            <td>{{item.batt}} <small>V</small></td>
+                            <td>{{item.batt * 2}} <small>V</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section> -->

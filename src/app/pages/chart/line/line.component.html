@@ -1,0 +1,72 @@
+<section class="col-lg-6" *ngIf="lineChartDataTemp.length > 0">
+    <div class="box box-danger direct-chat direct-chat-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Temperature</h3>
+            <div class="box-tools pull-right">
+                <span class="label label-danger">RE-Mote line chart</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
+                    <i class="fa fa-comments"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div style="display: block;">
+                <canvas *ngIf="lineChartDataTemp.length > 0" baseChart height="150px;" [datasets]="lineChartDataTemp" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColorTemp" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+            </div>
+            <div class="direct-chat-contacts">
+                <ul class="contacts-list">
+                    <li *ngFor="let item of datas">
+                        <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              {{item.sensor_temperature / 1000}} °C
+                              <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="col-lg-6" *ngIf="lineChartDataHumi.length > 0">
+    <div class="box box-primary direct-chat direct-chat-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Humidity</h3>
+            <div class="box-tools pull-right">
+                <span class="label label-info">Re-mote line chart</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
+                    <i class="fa fa-comments"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div style="display: block;">
+                <canvas *ngIf="lineChartDataHumi.length > 0" baseChart height="150px;" [datasets]="lineChartDataHumi" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColorHumi" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+            </div>
+            <div class="direct-chat-contacts">
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of datas">
+                                <td>{{item.time | date: 'h:mma'}}</td>
+                                <td>{{item.sensor_humidity}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <h4>Current data</h4>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-tint"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Hummidity</span>
+                    <span class="info-box-number">{{humi}}<small>%</small></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-thermometer-three-quarters"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Temperature</span>
+                    <span class="info-box-number">{{temp}} <small>°C</small></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-lightbulb-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Light</span>
+                    <span class="info-box-number">{{light}} <small>lux</small></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-tachometer"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Co Pressure</span>
+                    <span class="info-box-number">{{tempOnBoard}} <small>PSI</small></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+<div class="row">
+    <chart-line></chart-line>
+    <chart-bar></chart-bar>
+    <chart-radar></chart-radar>
+</div>
