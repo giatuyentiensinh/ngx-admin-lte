@@ -21,7 +21,7 @@
                     <li *ngFor="let item of datas">
                         <div class="contacts-list-info">
                             <span class="contacts-list-name">
-                              {{item.sensor_temperature / 1000}} °C
+                              {{item.sensor_temperature / 100}} °C
                               <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
                             </span>
                         </div>
@@ -54,14 +54,14 @@
                     <table class="table text-center">
                         <thead>
                             <tr>
-                                <th>Time</th>
                                 <th>Data</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of datas">
-                                <td>{{item.time | date: 'h:mma'}}</td>
-                                <td>{{item.sensor_humidity}} %</td>
+                                <td>{{item.sensor_humidity / 100}} %</td>
+                                <td>{{item.time | date: 'hh:mm:ss'}}</td>
                             </tr>
                         </tbody>
                     </table>

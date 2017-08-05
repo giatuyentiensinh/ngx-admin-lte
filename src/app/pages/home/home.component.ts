@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService, BreadcrumbService, RestService } from '../../ngx-admin-lte/index';
 import * as xml2js from 'xml2js';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private humi: number;
   private light: number;
   private tempOnBoard: number;
+
+  private timerSubscription: any;
+  private dataSubscription: any;
 
   constructor(private noServ: NotificationService,
     private rest: RestService,
@@ -47,15 +51,37 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this.rest.getFirstData('TEMPONBOARD_SENSOR').subscribe(res => {
     //   this.tempOnBoard = res;
     // });
+
     this.rest.getFirstData('RE-Mote').subscribe(res => {
       if (res.sensor_temperature) {
-        this.temp = '' + res.sensor_temperature / 1000;
-        this.humi = res.sensor_humidity;
+        this.temp = '' + res.sensor_temperature / 100;
+        this.humi = res.sensor_humidity / 100;
       }
     });
+
+    // this.refreshData();
   }
+
+
+  // private refreshData(): void {
+  //   this.dataSubscription = this.rest.getFirstData('RE-Mote').subscribe(res => {
+  //     this.temp = '' + res.sensor_temperature / 100;
+  //     this.humi = res.sensor_humidity / 100;
+  //     this.subscribeToData();
+  //   });
+  // }
+
+  // private subscribeToData(): void {
+  //   this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
+  // }
 
   public ngOnDestroy() {
     this.breadServ.clear();
+    // if (this.dataSubscription) {
+    //   this.dataSubscription.unsubscribe();
+    // }
+    // if (this.timerSubscription) {
+    //   this.timerSubscription.unsubscribe();
+    // }
   }
 }
