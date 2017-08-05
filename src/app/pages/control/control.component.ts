@@ -31,7 +31,7 @@ export class ControlComponent implements OnInit {
     ], 'ip', 'value');
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   searchIP() {
     this.searchProcess = true;
@@ -73,6 +73,13 @@ export class ControlComponent implements OnInit {
         .subscribe(res => this.noServ.success('The Blue led is turn off', 'Notification'));
   }
 
+  toggleGPIO() {
+    this.rest.ledControl('gpio&addr=' + this.sensorIp)
+      .subscribe(res => this.noServ.success('Request success', 'Notification'));
+  }
+
+  
+  
   selectIp(ip) {
     this.sensorIp = ip;
   }

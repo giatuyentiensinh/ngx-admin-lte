@@ -1,5 +1,5 @@
 <section class="col-lg-8" *ngIf="barChartDataADC.length > 0">
-    <div class="box box-info direct-chat direct-chat-info">
+    <div class="box box-default box-solid direct-chat direct-chat-default">
         <div class="box-header with-border">
             <h3 class="box-title">RE-Mote ADC</h3>
             <div class="box-tools pull-right">
@@ -38,10 +38,50 @@
                 </div>
             </div>
         </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-yellow">Last</span>
+                        <h5 class="description-header">{{datas[0].adc1 / 1000}}</h5>
+                        <span class="description-text">ADC1</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">First</span>
+                        <h5 class="description-header">{{datas[datas.length - 1].adc1 / 1000}}</h5>
+                        <span class="description-text">ADC1</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-yellow">Last</span>
+                        <h5 class="description-header">{{datas[0].adc3 / 100}}</h5>
+                        <span class="description-text">ADC3</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">First</span>
+                        <h5 class="description-header">{{datas[datas.length - 1].adc3 / 100}}</h5>
+                        <span class="description-text">ADC3</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div
+>                
+            </div>
+            <!-- /.row -->
+        </div>
     </div>
 </section>
 <section class="col-lg-4" *ngIf="barChartDataBattery.length > 0">
-    <div class="box box-success">
+    <div class="box box-success box-solid">
         <div class="box-header with-border">
             <h3 class="box-title">RE-Mote Battery</h3>
             <div class="box-tools pull-right">
@@ -54,6 +94,28 @@
             <div style="display: block">
                 <canvas *ngIf="barChartDataBattery.length > 0" baseChart [datasets]="barChartDataBattery" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
             </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-yellow">Last</span>
+                        <h5 class="description-header">{{datas[0].battery / 1000}}</h5>
+                        <span class="description-text">Battery</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">First</span>
+                        <h5 class="description-header">{{datas[datas.length - 1].battery / 1000}}</h5>
+                        <span class="description-text">Battery</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+            </div>
+            <!-- /.row -->
         </div>
     </div>
 </section>
