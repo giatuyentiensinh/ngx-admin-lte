@@ -110,24 +110,25 @@ export class RestService {
         let result: any[] = [];
         for (let e of xml) {
           xml2js.parseString(e.con, function(err, param) {
-            let adc1, adc2, adc3, battery, temperature, sensor_temperature, sensor_humidity, time;
+            let adc1, adc2, adc3, battery, temperature, sensor_temperature, sensor_humidity, addr, time;
             for (let item of param.obj.int) {
               if ('adc1' === item['$'].name) {
                 adc1 = item['$'].val;
                 time = e.lt;
               }
-              if ('adc2' === item['$'].name)
+              else if ('adc2' === item['$'].name)
                 adc2 = item['$'].val;
-              if ('adc3' === item['$'].name)
+              else if ('adc3' === item['$'].name)
                 adc3 = item['$'].val;
-              if ('battery' === item['$'].name)
+              else if ('battery' === item['$'].name)
                 battery = item['$'].val;
-              if ('temperature' === item['$'].name)
+              else if ('temperature' === item['$'].name)
                 temperature = item['$'].val;
-              if ('sensor_temperature' === item['$'].name)
+              else if ('sensor_temperature' === item['$'].name)
                 sensor_temperature = item['$'].val;
-              if ('sensor_humidity' === item['$'].name)
+              else if ('sensor_humidity' === item['$'].name)
                 sensor_humidity = item['$'].val;
+              addr = param.obj.str[0]['$'].val;
             }
             result.push({
               adc1: adc1,
@@ -137,6 +138,7 @@ export class RestService {
               temperature: temperature,
               sensor_temperature: sensor_temperature,
               sensor_humidity: sensor_humidity,
+              addr: addr,
               time: time
             });
           });
