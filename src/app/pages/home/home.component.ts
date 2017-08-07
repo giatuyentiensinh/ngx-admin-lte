@@ -12,8 +12,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private temp: string;
   private humi: number;
-  private light: number;
   private tempOnBoard: number;
+  private battery: number;
+
+  private datas: any[];
 
   private timerSubscription: any;
   private dataSubscription: any;
@@ -39,24 +41,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       ]
     });
 
-    // this.rest.getFirstData('TEMPERATURE_SENSOR').subscribe(res => {
-    //   this.temp = res;
-    // });
-    // this.rest.getFirstData('HUMIDITY_SENSOR').subscribe(res => {
-    //   this.humi = res;
-    // });
-    // this.rest.getFirstData('LIGHT_SENSOR').subscribe(res => {
-    //   this.light = res;
-    // });
-    // this.rest.getFirstData('TEMPONBOARD_SENSOR').subscribe(res => {
-    //   this.tempOnBoard = res;
-    // });
+    this.rest.getAllData('RE-Mote').subscribe(res => this.datas = res);
 
     this.rest.getFirstData('RE-Mote').subscribe(res => {
       if (res.sensor_temperature) {
         this.temp = '' + res.sensor_temperature / 100;
         this.humi = res.sensor_humidity / 100;
       }
+      this.battery = res.battery / 1000;
+      this.tempOnBoard = res.temperature / 1000;
     });
 
     // this.refreshData();

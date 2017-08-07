@@ -3,7 +3,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Temperature</h3>
             <div class="box-tools pull-right">
-                <span class="label label-danger">RE-Mote line chart</span>
+                <span class="label label-danger">Total {{datas.length}} records</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -20,7 +20,7 @@
                 <ul class="contacts-list">
                     <li *ngFor="let item of datas">
                         <div class="contacts-list-info">
-                            <span class="contacts-list-name">
+                            <span class="contacts-list-name" *ngIf="item?.sensor_temperature">
                               {{item.sensor_temperature / 100}} °C
                               <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
                             </span>
@@ -29,6 +29,26 @@
                 </ul>
             </div>
         </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-yellow">Last</span>
+                        <h5 class="description-header">{{datas[0].sensor_temperature / 1000}} °C</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">First</span>
+                        <h5 class="description-header">{{datas[datas.length - 1].sensor_temperature / 1000}} °C</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
     </div>
 </section>
 <section class="col-lg-6" *ngIf="lineChartDataHumi.length > 0">
@@ -36,7 +56,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Humidity</h3>
             <div class="box-tools pull-right">
-                <span class="label label-info">Re-mote line chart</span>
+                <span class="label label-info">Total {{datas.length}} records</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -50,23 +70,37 @@
                 <canvas *ngIf="lineChartDataHumi.length > 0" baseChart height="150px;" [datasets]="lineChartDataHumi" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColorHumi" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
             </div>
             <div class="direct-chat-contacts">
-                <div class="table-responsive">
-                    <table class="table text-center">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of datas">
-                                <td>{{item.sensor_humidity / 100}} %</td>
-                                <td>{{item.time | date: 'hh:mm:ss'}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <ul class="contacts-list">
+                    <li *ngFor="let item of datas">
+                        <div class="contacts-list-info">
+                            <span class="contacts-list-name" *ngIf="item?.sensor_humidity">
+                              {{item.sensor_humidity / 1000}} %
+                              <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-yellow">Last</span>
+                        <h5 class="description-header">{{datas[0].sensor_humidity / 1000}} %</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6 col-xs-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">First</span>
+                        <h5 class="description-header">{{datas[datas.length - 1].sensor_humidity / 1000}} %</h5>
+                    </div>
+                    <!-- /.description-block -->
                 </div>
             </div>
+            <!-- /.row -->
         </div>
     </div>
 </section>

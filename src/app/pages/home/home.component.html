@@ -29,10 +29,10 @@
         <div class="clearfix visible-sm-block"></div>
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-lightbulb-o"></i></span>
+                <span class="info-box-icon bg-green"><i class="fa fa-thermometer-half"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Light</span>
-                    <span class="info-box-number">{{light}} <small>lux</small></span>
+                    <span class="info-box-text">Temp OnBoard</span>
+                    <span class="info-box-number">{{tempOnBoard}} <small>°C</small></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -41,10 +41,10 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="fa fa-tachometer"></i></span>
+                <span class="info-box-icon bg-yellow"><i class="fa fa-battery-full"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Co Pressure</span>
-                    <span class="info-box-number">{{tempOnBoard}} <small>PSI</small></span>
+                    <span class="info-box-text">Battery</span>
+                    <span class="info-box-number">{{battery}} <small>V</small></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -58,3 +58,46 @@
     <chart-bar></chart-bar>
     <chart-radar></chart-radar>
 </div>
+<section class="col-lg-12" *ngIf="datas.length > 0">
+    <div class="box box-warning box-solid collapsed-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Data table</h3>
+            <div class="box-tools pull-right">
+                <span class="label label-info">Total {{datas.length}} records</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table text-center table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>ADC1 (V)</th>
+                            <th>ADC2 (V)</th>
+                            <th>ADC3 (V)</th>
+                            <th>Temperature On Board (°C)</th>
+                            <th>Battery (V)</th>
+                            <th>Temperature Sensor (°C)</th>
+                            <th>Humidity Sensor (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of datas">
+                            <td>{{item.time | date: 'hh:mm:ss'}}</td>
+                            <td>{{item.adc1/1000}} </td>
+                            <td>{{item.adc2/100}} </td>
+                            <td>{{item.adc3/100}} </td>
+                            <td>{{item.temperature/1000}} </td>
+                            <td>{{item.battery/1000}} </td>
+                            <td>{{item.sensor_temperature/100}} </td>
+                            <td>{{item.sensor_humidity /100}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

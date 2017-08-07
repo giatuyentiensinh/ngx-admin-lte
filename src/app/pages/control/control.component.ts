@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
-import { NotificationService, RestService } from '../../ngx-admin-lte/index';
+import { BreadcrumbService, NotificationService, RestService } from '../../ngx-admin-lte/index';
 @Component({
   selector: 'app-control',
   templateUrl: './control.component.html',
@@ -21,6 +21,7 @@ export class ControlComponent implements OnInit {
   protected dataService: CompleterData;
 
   constructor(private noServ: NotificationService,
+    private breadServ: BreadcrumbService,
     private rest: RestService,
     private completerService: CompleterService) {
     this.dataService = completerService.local([
@@ -31,7 +32,24 @@ export class ControlComponent implements OnInit {
     ], 'ip', 'value');
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.breadServ.set({
+      header: 'Control',
+      display: true,
+      levels: [
+        {
+          icon: 'home',
+          link: ['/'],
+          title: 'Home'
+        },
+        {
+          icon: 'wifi',
+          link: ['/control'],
+          title: 'Control'
+        }
+      ]
+    });
+  }
 
   searchIP() {
     this.searchProcess = true;
@@ -78,8 +96,8 @@ export class ControlComponent implements OnInit {
       .subscribe(res => this.noServ.success('Request success', 'Notification'));
   }
 
-  
-  
+
+
   selectIp(ip) {
     this.sensorIp = ip;
   }
