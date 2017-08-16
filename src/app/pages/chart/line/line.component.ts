@@ -21,8 +21,8 @@ export class LineComponent implements OnDestroy {
       this.datas = res;
       res.map(item => {
         if (item.sensor_temperature) {
-          datastemp.push(item.sensor_temperature / 100);
-          datashumi.push(item.sensor_humidity / 100);
+          datastemp.push(item.sensor_temperature / 10);
+          datashumi.push(item.sensor_humidity / 10);
           times.push(this.datePipe.transform(item.time, 'hh:mm:ss'));
         }
       });
@@ -40,6 +40,7 @@ export class LineComponent implements OnDestroy {
   //     // console.log(res.sensor_temperature);
   //     let datastemp = [];
   //     let datashumi = [];
+  //     let datas = [];
   //     let times = [];
   //     for (let i = 1; i < this.lineChartDataTemp[0].data.length; i++)
   //       datastemp.push(this.lineChartDataTemp[0].data[i]);
@@ -47,9 +48,17 @@ export class LineComponent implements OnDestroy {
   //       // times.push(this.lineChartLabels[i]);
   //       datashumi.push(this.lineChartDataHumi[0].data[i]);
   //     }
+  //     for (let i = 1; i < this.datas.length; i++)
+  //       datas.push(this.datas[i]);
   //     // times.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
-  //     datastemp.push(res.sensor_temperature / 100);
-  //     datashumi.push(res.sensor_humidity / 100);
+  //     datastemp.push(res.sensor_temperature / 10);
+  //     datashumi.push(res.sensor_humidity / 10);
+  //     datas.push({
+  //       sensor_humidity: res.sensor_humidity,
+  //       sensor_temperature: res.sensor_temperature,
+  //       time: new Date()
+  //     });
+  //     this.datas = datas;
   //     this.lineChartDataTemp = [{ data: datastemp, label: 'Temperature sensor (°C)' }];
   //     this.lineChartDataHumi = [{ data: datashumi, label: 'Humidity sensor (%)' }];
   //     // this.lineChartLabels = times;
@@ -58,7 +67,7 @@ export class LineComponent implements OnDestroy {
   // }
 
   // private subscribeToData(): void {
-  //   this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
+  //   this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
   // }
 
   public ngOnDestroy(): void {

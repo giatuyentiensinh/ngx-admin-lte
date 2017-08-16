@@ -21,7 +21,7 @@
                     <li *ngFor="let item of datas">
                         <div class="contacts-list-info">
                             <span class="contacts-list-name" *ngIf="item?.sensor_temperature">
-                              {{item.sensor_temperature / 100}} °C
+                              {{item.sensor_temperature / 10}} °C
                               <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
                             </span>
                         </div>
@@ -34,7 +34,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
-                        <h5 class="description-header">{{datas[0].sensor_temperature / 1000}} °C</h5>
+                        <h5 class="description-header">{{datas[0].sensor_temperature / 10}} °C</h5>
                     </div>
                     <!-- /.description-block -->
                 </div>
@@ -42,7 +42,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-green">First</span>
-                        <h5 class="description-header">{{datas[datas.length - 1].sensor_temperature / 1000}} °C</h5>
+                        <h5 class="description-header">{{datas[datas.length - 1].sensor_temperature / 10}} °C</h5>
                     </div>
                     <!-- /.description-block -->
                 </div>
@@ -74,7 +74,7 @@
                     <li *ngFor="let item of datas">
                         <div class="contacts-list-info">
                             <span class="contacts-list-name" *ngIf="item?.sensor_humidity">
-                              {{item.sensor_humidity / 1000}} %
+                              {{item.sensor_humidity / 10}} %
                               <small class="contacts-list-date pull-right">{{item.time | date: 'hh:mm:ss'}}</small>
                             </span>
                         </div>
@@ -87,7 +87,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
-                        <h5 class="description-header">{{datas[0].sensor_humidity / 1000}} %</h5>
+                        <h5 class="description-header">{{datas[0].sensor_humidity / 10}} %</h5>
                     </div>
                     <!-- /.description-block -->
                 </div>
@@ -95,7 +95,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-green">First</span>
-                        <h5 class="description-header">{{datas[datas.length - 1].sensor_humidity / 1000}} %</h5>
+                        <h5 class="description-header">{{datas[datas.length - 1].sensor_humidity / 10}} %</h5>
                     </div>
                     <!-- /.description-block -->
                 </div>

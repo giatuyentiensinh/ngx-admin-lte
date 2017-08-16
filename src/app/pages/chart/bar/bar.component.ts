@@ -23,7 +23,7 @@ export class BarComponent {
       let times: any[] = [];
       res.map(item => {
         adc1s.push(item.adc1 / 1000);
-        adc3s.push(item.adc3 / 100);
+        adc3s.push(item.adc3 / 1000);
         battery.push(item.battery / 1000);
         times.push(this.datePipe.transform(item.time, 'mm:ss'));
       });

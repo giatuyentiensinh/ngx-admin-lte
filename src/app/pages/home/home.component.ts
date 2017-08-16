@@ -45,8 +45,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.rest.getFirstData('RE-Mote').subscribe(res => {
       if (res.sensor_temperature) {
-        this.temp = '' + res.sensor_temperature / 100;
-        this.humi = res.sensor_humidity / 100;
+        this.temp = '' + res.sensor_temperature / 10;
+        this.humi = res.sensor_humidity / 10;
       }
       this.battery = res.battery / 1000;
       this.tempOnBoard = res.temperature / 1000;
