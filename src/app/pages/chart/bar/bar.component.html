@@ -13,7 +13,7 @@
         </div>
         <div class="box-body">
             <div style="display: block">
-                <canvas *ngIf="barChartDataADC.length > 0" baseChart [datasets]="barChartDataADC" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                <canvas *ngIf="barChartDataADC.length > 0" baseChart [datasets]="barChartDataADC" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
             </div>
             <div class="direct-chat-contacts">
                 <div class="table-responsive">
@@ -30,7 +30,7 @@
                             <tr *ngFor="let item of datas">
                                 <td>{{item.time | date: 'h:mma'}}</td>
                                 <td>{{item.adc1/1000}} </td>
-                                <td>{{item.adc3/100}} </td>
+                                <td>{{item.adc3/1000}} </td>
                                 <td>{{item.battery/1000}} </td>
                             </tr>
                         </tbody>
@@ -43,7 +43,7 @@
                 <div class="col-sm-3 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
-                        <h5 class="description-header">{{datas[0].adc1 / 1000}}</h5>
+                        <h5 class="description-header">{{datas[0].adc1 / 1000}} V</h5>
                         <span class="description-text">ADC1</span>
                     </div>
                     <!-- /.description-block -->
@@ -52,7 +52,7 @@
                 <div class="col-sm-3 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-green">First</span>
-                        <h5 class="description-header">{{datas[datas.length - 1].adc1 / 1000}}</h5>
+                        <h5 class="description-header">{{datas[datas.length - 1].adc1 / 1000}} V</h5>
                         <span class="description-text">ADC1</span>
                     </div>
                     <!-- /.description-block -->
@@ -60,7 +60,7 @@
                 <div class="col-sm-3 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
-                        <h5 class="description-header">{{datas[0].adc3 / 1000}}</h5>
+                        <h5 class="description-header">{{datas[0].adc3 / 1000}} V</h5>
                         <span class="description-text">ADC3</span>
                     </div>
                     <!-- /.description-block -->
@@ -69,7 +69,7 @@
                 <div class="col-sm-3 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-green">First</span>
-                        <h5 class="description-header">{{datas[datas.length - 1].adc3 / 1000}}</h5>
+                        <h5 class="description-header">{{datas[datas.length - 1].adc3 / 1000}} V</h5>
                         <span class="description-text">ADC3</span>
                     </div>
                     <!-- /.description-block -->
@@ -100,7 +100,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
-                        <h5 class="description-header">{{datas[0].battery / 1000}}</h5>
+                        <h5 class="description-header">{{datas[0].battery / 1000}} V</h5>
                         <span class="description-text">Battery</span>
                     </div>
                     <!-- /.description-block -->
@@ -109,7 +109,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="description-block border-right">
                         <span class="description-percentage text-green">First</span>
-                        <h5 class="description-header">{{datas[datas.length - 1].battery / 1000}}</h5>
+                        <h5 class="description-header">{{datas[datas.length - 1].battery / 1000}} V</h5>
                         <span class="description-text">Battery</span>
                     </div>
                     <!-- /.description-block -->

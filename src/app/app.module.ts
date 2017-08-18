@@ -12,6 +12,7 @@ import { routing } from './app.routes';
 // modules
 import { NgxAdminLteModule } from './ngx-admin-lte/ngx-admin-lte.module';
 import { RestService } from './ngx-admin-lte/index';
+import { IO } from 'rxjs-socket.io';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SwitchComponent } from 'angular2-bootstrap-switch/components';
 import { Ng2CompleterModule } from "ng2-completer";
@@ -47,7 +48,7 @@ import { ControlComponent } from './pages/control/control.component';
     routing,
     BrowserAnimationsModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, DatePipe, RestService],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, DatePipe, RestService, IO],
   bootstrap: [AppComponent
   ]
 })

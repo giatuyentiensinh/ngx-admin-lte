@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService, BreadcrumbService, RestService } from '../../ngx-admin-lte/index';
 import * as xml2js from 'xml2js';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +19,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private timerSubscription: any;
   private dataSubscription: any;
+  private subscribe: Subscription;
 
-  constructor(private noServ: NotificationService,
+  constructor(private notification: NotificationService,
     private rest: RestService,
-    private breadServ: BreadcrumbService) { }
+    private breadServ: BreadcrumbService) {
+  }
 
   public ngOnInit() {
     this.breadServ.set({
@@ -41,40 +43,42 @@ export class HomeComponent implements OnInit, OnDestroy {
       ]
     });
 
-    this.rest.getAllData('RE-Mote').subscribe(res => this.datas = res);
-
-    this.rest.getFirstData('RE-Mote').subscribe(res => {
-      if (res.sensor_temperature) {
-        this.temp = '' + res.sensor_temperature / 10;
-        this.humi = res.sensor_humidity / 10;
+    this.rest.getAllData('RE-Mote').subscribe(res => {
+      this.datas = res;
+      if (res[res.length - 1].sensor_temperature) {
+        this.temp = '' + res[res.length - 1].sensor_temperature / 10;
+        this.humi = res[res.length - 1].sensor_humidity / 10;
       }
-      this.battery = res.battery / 1000;
-      this.tempOnBoard = res.temperature / 1000;
+      this.battery = res[res.length - 1].battery / 1000;
+      this.tempOnBoard = res[res.length - 1].temperature / 1000;
+
+      this.datas = this.datas.reverse();
+
+      this.subscribe = this.rest.streamIO().subscribe(data => {
+        if (data.sensor_temperature) {
+          this.temp = '' + data.sensor_temperature / 10;
+          this.humi = data.sensor_humidity / 10;
+        }
+        this.battery = data.battery / 1000;
+        this.tempOnBoard = data.temperature / 1000;
+        this.datas.unshift({
+          adc1: data.adc1,
+          adc2: data.adc2,
+          adc3: data.adc3,
+          battery: data.battery,
+          temperature: data.temperature,
+          sensor_temperature: data.sensor_temperature,
+          sensor_humidity: data.sensor_humidity,
+          addr: data.addr,
+          time: new Date()
+        });
+      });
     });
 
-    // this.refreshData();
   }
-
-
-  // private refreshData(): void {
-  //   this.dataSubscription = this.rest.getFirstData('RE-Mote').subscribe(res => {
-  //     this.temp = '' + res.sensor_temperature / 100;
-  //     this.humi = res.sensor_humidity / 100;
-  //     this.subscribeToData();
-  //   });
-  // }
-
-  // private subscribeToData(): void {
-  //   this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
-  // }
 
   public ngOnDestroy() {
     this.breadServ.clear();
-    // if (this.dataSubscription) {
-    //   this.dataSubscription.unsubscribe();
-    // }
-    // if (this.timerSubscription) {
-    //   this.timerSubscription.unsubscribe();
-    // }
+    this.subscribe.unsubscribe();
   }
 }

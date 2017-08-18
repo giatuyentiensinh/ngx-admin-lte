@@ -34,6 +34,7 @@
     "ng2-charts": "^1.6.0",
     "ng2-completer": "^1.6.0",
     "rxjs": "^5.1.0",
+    "rxjs-socket.io": "^0.2.1",
     "xml2js": "^0.4.17",
     "zone.js": "^0.8.4"
   },

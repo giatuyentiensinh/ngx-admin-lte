@@ -1,86 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RestService } from '../../../ngx-admin-lte/index';
-import { Observable } from 'rxjs';
-
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'chart-line',
   templateUrl: './line.component.html'
 })
-export class LineComponent implements OnDestroy {
-
-  public datas: any[] = [];
-
-  constructor(public rest: RestService,
-    private datePipe: DatePipe) {
-    rest.getAllData('RE-Mote').subscribe(res => {
-      let datastemp: number[] = [];
-      let datashumi: number[] = [];
-      let times: any[] = [];
-      this.datas = res;
-      res.map(item => {
-        if (item.sensor_temperature) {
-          datastemp.push(item.sensor_temperature / 10);
-          datashumi.push(item.sensor_humidity / 10);
-          times.push(this.datePipe.transform(item.time, 'hh:mm:ss'));
-        }
-      });
-      if (datastemp.length > 0) {
-        this.lineChartDataTemp = [{ data: datastemp, label: 'Temperature sensor (°C)' }];
-        this.lineChartDataHumi = [{ data: datashumi, label: 'Humidity sensor (%)' }];
-        this.lineChartLabels = times;
-      }
-    });
-    // this.subscribeToData();
-  }
-
-  // private refreshData(): void {
-  //   this.dataSubscription = this.rest.getFirstData('RE-Mote').subscribe(res => {
-  //     // console.log(res.sensor_temperature);
-  //     let datastemp = [];
-  //     let datashumi = [];
-  //     let datas = [];
-  //     let times = [];
-  //     for (let i = 1; i < this.lineChartDataTemp[0].data.length; i++)
-  //       datastemp.push(this.lineChartDataTemp[0].data[i]);
-  //     for (let i = 1; i < this.lineChartDataHumi[0].data.length; i++){
-  //       // times.push(this.lineChartLabels[i]);
-  //       datashumi.push(this.lineChartDataHumi[0].data[i]);
-  //     }
-  //     for (let i = 1; i < this.datas.length; i++)
-  //       datas.push(this.datas[i]);
-  //     // times.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
-  //     datastemp.push(res.sensor_temperature / 10);
-  //     datashumi.push(res.sensor_humidity / 10);
-  //     datas.push({
-  //       sensor_humidity: res.sensor_humidity,
-  //       sensor_temperature: res.sensor_temperature,
-  //       time: new Date()
-  //     });
-  //     this.datas = datas;
-  //     this.lineChartDataTemp = [{ data: datastemp, label: 'Temperature sensor (°C)' }];
-  //     this.lineChartDataHumi = [{ data: datashumi, label: 'Humidity sensor (%)' }];
-  //     // this.lineChartLabels = times;
-  //     this.subscribeToData();
-  //   });
-  // }
-
-  // private subscribeToData(): void {
-  //   this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
-  // }
-
-  public ngOnDestroy(): void {
-    // if (this.dataSubscription) {
-    //   this.dataSubscription.unsubscribe();
-    // }
-    // if (this.timerSubscription) {
-    //   this.timerSubscription.unsubscribe();
-    // }
-  }
-
-  // private timerSubscription: any;
-  // private dataSubscription: any;
+export class LineComponent implements OnInit, OnDestroy {
 
   public lineChartDataTemp: Array<any> = [];
   public lineChartDataHumi: Array<any> = [];
@@ -107,4 +34,52 @@ export class LineComponent implements OnDestroy {
   }];
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
+
+  // data
+  public datas: any[] = [];
+  private subscribe: Subscription;
+
+  constructor(public rest: RestService,
+    private datePipe: DatePipe) {}
+
+  public ngOnInit() {
+    this.rest.getAllData('RE-Mote').subscribe(res => {
+      let datastemp: number[] = [];
+      let datashumi: number[] = [];
+      let times: any[] = [];
+      this.datas = res;
+      res.map(item => {
+        if (item.sensor_temperature) {
+          datastemp.push(item.sensor_temperature / 10);
+          datashumi.push(item.sensor_humidity / 10);
+          times.push(this.datePipe.transform(item.time, 'hh:mm:ss'));
+        }
+      });
+      if (datastemp.length > 0) {
+        this.lineChartDataTemp = [{ data: datastemp, label: 'Temperature sensor (°C)' }];
+        this.lineChartDataHumi = [{ data: datashumi, label: 'Humidity sensor (%)' }];
+        this.lineChartLabels = times;
+      }
+    this.subscribe = this.rest.streamIO().subscribe(data => {
+      this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
+      this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
+      this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
+      this.datas.push({
+        sensor_humidity: data.sensor_humidity,
+        sensor_temperature: data.sensor_temperature,
+        time: new Date()
+      });
+
+      this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
+      this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
+    });
+    });
+
+  }
+
+
+  public ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+  }
+
 }

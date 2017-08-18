@@ -3,6 +3,8 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import * as xml2js from 'xml2js';
+import { IO, ioEvent } from 'rxjs-socket.io';
+
 
 @Injectable()
 export class RestService {
@@ -14,7 +16,14 @@ export class RestService {
   public lastGetAll: Array<any>;
   public lastGet: any;
 
-  constructor(private http: Http) {
+  private onMsgNews: ioEvent;
+
+  constructor(private http: Http, private socket: IO) {
+
+    this.onMsgNews = new ioEvent("msg");
+    this.socket.listenToEvent(this.onMsgNews);
+    this.socket.connect('http://localhost:9092');
+
     // this.modelName = 'in-cse/in-name'; // for dev
     this.modelName = 'mn-cse/mn-name';
     this.headers = new Headers();
@@ -36,6 +45,10 @@ export class RestService {
         return obj;
       }
     }
+  }
+
+  public streamIO(): Observable<any> {
+    return this.onMsgNews.event$;
   }
 
   public ledControl(request): Observable<any> {
