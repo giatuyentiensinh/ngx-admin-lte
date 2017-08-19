@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { BreadcrumbService, NotificationService, RestService } from '../../ngx-admin-lte/index';
+
 @Component({
   selector: 'app-control',
   templateUrl: './control.component.html',
@@ -98,7 +99,7 @@ export class ControlComponent implements OnInit {
       .subscribe(res => this.noServ.success('Request success', 'Notification'));
   }
 
-  toggleObsLed() {
+  toggleObsBtn() {
     this.obsStatus = !this.obsStatus;
     if (this.obsStatus)
       this.rest.controlObj('observeBtnActive&addr=' + this.sensorIp)

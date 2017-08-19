@@ -24,8 +24,8 @@ export class RestService {
     this.onMsgNews = new ioEvent("msg");
     this.socket.listenToEvent(this.onMsgNews);
     this.onObsBtn = new ioEvent("obj");
-    this.socket.listenToEvent(this.onObsBtn);
-    this.socket.connect('http://localhost:9092');
+    this.socket.listenToEvent(this.onObsBtn);    
+    this.socket.connect('http://' + window.location.hostname + ':9092');
 
     // this.modelName = 'in-cse/in-name'; // for dev
     this.modelName = 'mn-cse/mn-name';

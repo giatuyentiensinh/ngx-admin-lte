@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --base-href=\"/iotworkshop/hust/index.html\" --output-path",
+    "prod": "ng build env=--prod --base-href=\"/iotworkshop/hust/index.html\" --output-path",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,7 +24,6 @@
     "@ngx-translate/core": "^7.1.0",
     "@ngx-translate/http-loader": "^0.1.0",
     "admin-lte": "^2.3.11",
-    "angular2-bootstrap-switch": "^0.1.12",
     "angular2-toaster": "^3.0.1",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.6.0",

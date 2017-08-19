@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="col-md-8" *ngIf="sensorIp != null">
-    <!-- <div class="col-md-8"> -->
+        <!-- <div class="col-md-8"> -->
         <div class="col-md-7">
             <div class="box box-info box-solid">
                 <div class="box-header with-border">
@@ -48,7 +48,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">RED</span>
                             <span class="info-box-number">IP: {{sensorIp}}</span>
-                            <switch class="pull-right" [status]="redStatus" [onText]="'ON'" [offText]="'OFF'" [onColor]="'yellow'" [offColor]="'gray'" [size]="'small'" (statusChange)="toggleRedLed()"></switch>
+                            <ui-switch class="pull-right" color="red" [(ngModel)]="redStatus" (change)="toggleRedLed()"></ui-switch>
                         </div>
                     </div>
                     <div class="info-box bg-green">
@@ -56,7 +56,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">GREEN</span>
                             <span class="info-box-number">IP: {{sensorIp}}</span>
-                            <switch class="pull-right" [status]="greenStatus" [onText]="'ON'" [offText]="'OFF'" [onColor]="'yellow'" [offColor]="'gray'" [size]="'small'" (statusChange)="toggleGreenLed()"></switch>
+                            <ui-switch class="pull-right" color="green" [(ngModel)]="greenStatus" (change)="toggleGreenLed()"></ui-switch>
                         </div>
                     </div>
                     <div class="info-box bg-blue">
@@ -64,7 +64,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">BLUE</span>
                             <span class="info-box-number">IP: {{sensorIp}}</span>
-                            <switch class="pull-right" [status]="blueStatus" [onText]="'ON'" [offText]="'OFF'" [onColor]="'yellow'" [offColor]="'gray'" [size]="'small'" (statusChange)="toggleBlueLed()"></switch>
+                            <ui-switch class="pull-right" color="blue" [(ngModel)]="blueStatus" (change)="toggleBlueLed()"></ui-switch>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -104,7 +104,7 @@
                                     <span class="label label-danger pull-right">Observe</span>
                                 </div>
                                 <span class="product-description">IP: {{sensorIp}}</span>
-                                <switch class="pull-right" [status]="obsStatus" [onText]="'ON'" [offText]="'OFF'" [onColor]="'yellow'" [offColor]="'gray'" [size]="'small'" (statusChange)="toggleObsLed()"></switch>
+                                <ui-switch class="pull-right" color="yellow" [(ngModel)]="obsStatus" (change)="toggleObsBtn()"></ui-switch>
                             </div>
                         </li>
                     </ul>

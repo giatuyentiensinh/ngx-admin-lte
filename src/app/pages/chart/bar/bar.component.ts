@@ -78,6 +78,7 @@ export class BarComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
+    if (this.subscribe)
+      this.subscribe.unsubscribe();
   }
 }

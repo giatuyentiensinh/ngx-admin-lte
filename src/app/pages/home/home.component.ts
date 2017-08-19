@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this.breadServ.clear();
-    this.subscribe.unsubscribe();
+    if (this.subscribe)
+      this.subscribe.unsubscribe();
   }
 }
