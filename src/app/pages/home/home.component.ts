@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           title: 'Home'
         },
         {
-          link: ['/sensor'],
+          link: ['/'],
           title: 'dashboard'
         }
       ]
@@ -72,6 +72,10 @@ export class HomeComponent implements OnInit, OnDestroy {
           addr: data.addr,
           time: new Date()
         });
+      });
+      
+      this.rest.streamObserveCoAP().subscribe(data => {
+        this.notification.success(data, 'CoAP Observe');
       });
     });
 

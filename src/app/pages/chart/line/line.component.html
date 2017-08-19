@@ -3,7 +3,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Temperature</h3>
             <div class="box-tools pull-right">
-                <span class="label label-danger">Total {{datas.length}} records</span>
+                <span class="label label-danger">{{datas.length}} records</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -40,7 +40,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6 col-xs-6">
-                    <div class="description-block border-right">
+                    <div class="description-block">
                         <span class="description-percentage text-green">First</span>
                         <h5 class="description-header">{{datas[datas.length - 1].sensor_temperature / 10}} °C</h5>
                     </div>
@@ -56,7 +56,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Humidity</h3>
             <div class="box-tools pull-right">
-                <span class="label label-info">Total {{datas.length}} records</span>
+                <span class="label label-info">{{datas.length}} records</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -93,7 +93,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6 col-xs-6">
-                    <div class="description-block border-right">
+                    <div class="description-block">
                         <span class="description-percentage text-green">First</span>
                         <h5 class="description-header">{{datas[datas.length - 1].sensor_humidity / 10}} %</h5>
                     </div>

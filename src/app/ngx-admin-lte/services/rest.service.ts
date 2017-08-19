@@ -17,11 +17,14 @@ export class RestService {
   public lastGet: any;
 
   private onMsgNews: ioEvent;
+  private onObsBtn: ioEvent;
 
   constructor(private http: Http, private socket: IO) {
 
     this.onMsgNews = new ioEvent("msg");
     this.socket.listenToEvent(this.onMsgNews);
+    this.onObsBtn = new ioEvent("obj");
+    this.socket.listenToEvent(this.onObsBtn);
     this.socket.connect('http://localhost:9092');
 
     // this.modelName = 'in-cse/in-name'; // for dev
@@ -50,13 +53,16 @@ export class RestService {
   public streamIO(): Observable<any> {
     return this.onMsgNews.event$;
   }
+  public streamObserveCoAP(): Observable<any> {
+    return this.onObsBtn.event$;
+  }
 
-  public ledControl(request): Observable<any> {
+  public controlObj(request): Observable<any> {
     return this.http.post('/~/' + this.modelName + '/' + 'RE-Mote?op=' + request, {}, {
       headers: this.headers
     })
-    .map(res => res)
-    .catch(this.handleError);
+      .map(res => res)
+      .catch(this.handleError);
   }
 
   public searchIp(ip): Observable<any> {

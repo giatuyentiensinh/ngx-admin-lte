@@ -1,8 +1,12 @@
+<div class="overlay" *ngIf="loadDataProcess">
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
 <section class="col-lg-8" *ngIf="barChartDataADC.length > 0">
     <div class="box box-default box-solid direct-chat direct-chat-default">
         <div class="box-header with-border">
             <h3 class="box-title">RE-Mote ADC</h3>
             <div class="box-tools pull-right">
+                <span class="label label-default">{{datas.length}} records</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -67,7 +71,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
-                    <div class="description-block border-right">
+                    <div class="description-block">
                         <span class="description-percentage text-green">First</span>
                         <h5 class="description-header">{{datas[datas.length - 1].adc3 / 1000}} V</h5>
                         <span class="description-text">ADC3</span>
@@ -83,8 +87,7 @@
     <div class="box box-success box-solid">
         <div class="box-header with-border">
             <h3 class="box-title">RE-Mote Battery</h3>
-            <div class="box-tools pull-right">
-                <span class="label label-success">Total {{datas.length}} records</span>
+            <div class="box-tools pull-right">                
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -101,16 +104,14 @@
                     <div class="description-block border-right">
                         <span class="description-percentage text-yellow">Last</span>
                         <h5 class="description-header">{{datas[0].battery / 1000}} V</h5>
-                        <span class="description-text">Battery</span>
                     </div>
                     <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6 col-xs-6">
-                    <div class="description-block border-right">
+                    <div class="description-block">
                         <span class="description-percentage text-green">First</span>
                         <h5 class="description-header">{{datas[datas.length - 1].battery / 1000}} V</h5>
-                        <span class="description-text">Battery</span>
                     </div>
                     <!-- /.description-block -->
                 </div>
@@ -119,35 +120,3 @@
         </div>
     </div>
 </section>
-<!-- <section class="col-lg-4">
-    <div class="box box-warning well">
-        <div class="box-header with-border">
-            <h3 class="box-title">RE-Mote ADC tracking</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Battery <strong>RE-Mote</strong></th>
-                            <th>Baatery <strong>z1</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of datas">
-                            <td>{{item.time |  date:'h:mma'}}</td>
-                            <td>{{item.batt}} <small>V</small></td>
-                            <td>{{item.batt * 2}} <small>V</small></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section> -->

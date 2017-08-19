@@ -13,6 +13,7 @@ export class ControlComponent implements OnInit {
   redStatus: boolean = false;
   greenStatus: boolean = false;
   blueStatus: boolean = false;
+  obsStatus: boolean = false;
 
   searchIp: string;
   sensorIps: string[] = [];
@@ -25,6 +26,7 @@ export class ControlComponent implements OnInit {
     private rest: RestService,
     private completerService: CompleterService) {
     this.dataService = completerService.local([
+      { ip: 'aaaa::212:4b00:', value: 'aaaa::212:4b00:' },
       { ip: 'aaaa::212:4b00:9df:4f53', value: 'aaaa::212:4b00:9df:4f53' },
       { ip: 'aaaa::212:4b00:615:a974', value: 'aaaa::212:4b00:615:a974' },
       { ip: 'fd00::212:4b00:9df:4f53', value: 'fd00::212:4b00:9df:4f53' },
@@ -64,39 +66,47 @@ export class ControlComponent implements OnInit {
   toggleRedLed() {
     this.redStatus = !this.redStatus;
     if (this.redStatus)
-      this.rest.ledControl('setOnLebRed&addr=' + this.sensorIp)
+      this.rest.controlObj('setOnLebRed&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Red led is turn on', 'Notification'));
     else
-      this.rest.ledControl('setOffLebRed&addr=' + this.sensorIp)
+      this.rest.controlObj('setOffLebRed&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Red led is turn off', 'Notification'));
   }
 
   toggleGreenLed() {
     this.greenStatus = !this.greenStatus;
     if (this.greenStatus)
-      this.rest.ledControl('setOnLebGreen&addr=' + this.sensorIp)
+      this.rest.controlObj('setOnLebGreen&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Green led is turn on', 'Notification'));
     else
-      this.rest.ledControl('setOffLebGreen&addr=' + this.sensorIp)
+      this.rest.controlObj('setOffLebGreen&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Green led is turn off', 'Notification'));
   }
 
   toggleBlueLed() {
     this.blueStatus = !this.blueStatus;
     if (this.blueStatus)
-      this.rest.ledControl('setOnLebBlue&addr=' + this.sensorIp)
+      this.rest.controlObj('setOnLebBlue&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Blue led is turn on', 'Notification'));
     else
-      this.rest.ledControl('setOffLebBlue&addr=' + this.sensorIp)
+      this.rest.controlObj('setOffLebBlue&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Blue led is turn off', 'Notification'));
   }
 
   toggleGPIO() {
-    this.rest.ledControl('gpio&addr=' + this.sensorIp)
+    this.rest.controlObj('gpio&addr=' + this.sensorIp)
       .subscribe(res => this.noServ.success('Request success', 'Notification'));
   }
 
-
+  toggleObsLed() {
+    this.obsStatus = !this.obsStatus;
+    if (this.obsStatus)
+      this.rest.controlObj('observeBtnActive&addr=' + this.sensorIp)
+        .subscribe(res => this.noServ.success('Observer button is turn on', 'Notification'));
+    else
+      this.rest.controlObj('observeBtnCancel&addr=' + this.sensorIp)
+        .subscribe(res => this.noServ.success('Observer button is turn off', 'Notification'));
+  }
 
   selectIp(ip) {
     this.sensorIp = ip;

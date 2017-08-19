@@ -3,6 +3,8 @@ import { DatePipe } from '@angular/common';
 import { RestService } from '../../../ngx-admin-lte/index';
 import { Subscription } from 'rxjs/Subscription';
 
+const MAX_RECORDS: number = 20;
+
 @Component({
   selector: 'chart-line',
   templateUrl: './line.component.html'
@@ -40,13 +42,14 @@ export class LineComponent implements OnInit, OnDestroy {
   private subscribe: Subscription;
 
   constructor(public rest: RestService,
-    private datePipe: DatePipe) {}
+    private datePipe: DatePipe) { }
 
   public ngOnInit() {
     this.rest.getAllData('RE-Mote').subscribe(res => {
       let datastemp: number[] = [];
       let datashumi: number[] = [];
       let times: any[] = [];
+      res = res.slice(0, MAX_RECORDS);
       this.datas = res;
       res.map(item => {
         if (item.sensor_temperature) {
@@ -55,28 +58,35 @@ export class LineComponent implements OnInit, OnDestroy {
           times.push(this.datePipe.transform(item.time, 'hh:mm:ss'));
         }
       });
+
       if (datastemp.length > 0) {
         this.lineChartDataTemp = [{ data: datastemp, label: 'Temperature sensor (°C)' }];
         this.lineChartDataHumi = [{ data: datashumi, label: 'Humidity sensor (%)' }];
         this.lineChartLabels = times;
       }
-    this.subscribe = this.rest.streamIO().subscribe(data => {
-      this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
-      this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
-      this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
-      this.datas.push({
-        sensor_humidity: data.sensor_humidity,
-        sensor_temperature: data.sensor_temperature,
-        time: new Date()
-      });
 
-      this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
-      this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
-    });
+      this.subscribe = this.rest.streamIO().subscribe(data => {
+        if (this.lineChartDataTemp[0].data.length > MAX_RECORDS) {
+          this.lineChartLabels.shift();
+          this.lineChartDataHumi[0].data.shift();
+          this.lineChartDataTemp[0].data.shift();
+        }
+
+        this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
+        this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
+        this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
+        this.datas.push({
+          sensor_humidity: data.sensor_humidity,
+          sensor_temperature: data.sensor_temperature,
+          time: new Date()
+        });
+
+        this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
+        this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
+      });
     });
 
   }
-
 
   public ngOnDestroy(): void {
     this.subscribe.unsubscribe();

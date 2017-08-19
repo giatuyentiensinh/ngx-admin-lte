@@ -3,6 +3,8 @@ import { DatePipe } from '@angular/common';
 import { RestService } from '../../../ngx-admin-lte/index';
 import { Subscription } from 'rxjs/Subscription';
 
+const MAX_RECORDS: number = 20;
+
 @Component({
   selector: 'chart-bar',
   templateUrl: './bar.component.html'
@@ -13,6 +15,8 @@ export class BarComponent implements OnInit, OnDestroy {
   public barChartDataADC: any[] = [];
   public barChartDataBattery: any[] = [];
   public datas: any[] = [];
+
+  public loadDataProcess: boolean = true;
 
   constructor(public rest: RestService,
     private datePipe: DatePipe) { }
@@ -27,11 +31,13 @@ export class BarComponent implements OnInit, OnDestroy {
   private subscribe: Subscription;
 
   public ngOnInit() {
+    this.loadDataProcess = true;
     this.rest.getAllData('RE-Mote').subscribe(res => {
       let adc1s: number[] = [];
       let adc3s: number[] = [];
       let battery: number[] = [];
       let times: any[] = [];
+      res = res.slice(0, MAX_RECORDS);
       res.map(item => {
         adc1s.push(item.adc1 / 1000);
         adc3s.push(item.adc3 / 1000);
@@ -42,8 +48,17 @@ export class BarComponent implements OnInit, OnDestroy {
       this.barChartDataBattery = [{ data: battery, label: 'Battery' }];
       this.barChartLabels = times;
       this.datas = res;
+      this.loadDataProcess = false;
 
       this.subscribe = this.rest.streamIO().subscribe(data => {
+
+        if (this.barChartDataADC[0].data.length > MAX_RECORDS) {
+          this.barChartLabels.shift();
+          this.barChartDataADC[0].data.shift();
+          this.barChartDataADC[1].data.shift();
+          this.barChartDataBattery[0].data.shift();
+        }
+
         this.barChartDataADC[0].data.push(data.adc1 / 1000);
         this.barChartDataADC[1].data.push(data.adc3 / 1000);
         this.barChartDataBattery[0].data.push(data.battery / 1000);
@@ -51,11 +66,11 @@ export class BarComponent implements OnInit, OnDestroy {
         this.barChartDataADC = [{ data: this.barChartDataADC[0].data, label: 'ADC1' }, { data: this.barChartDataADC[1].data, label: 'ADC3' }];
         this.barChartDataBattery = [{ data: this.barChartDataBattery[0].data, label: 'Battery' }];
         this.datas.unshift({
+          time: new Date(),
           adc1: data.adc1,
           adc2: data.adc2,
           adc3: data.adc3,
-          battery: data.battery,
-          time: new Date()
+          battery: data.battery
         });
       });
 
