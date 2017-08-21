@@ -13,5 +13,32 @@
                 <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType"></canvas>
             </div>
         </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-4 col-xs-4">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">ADC1</span>
+                        <h5 class="description-header">{{radarChartData[0].data[0]}} V</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 col-xs-4">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-green">Battery</span>
+                        <h5 class="description-header">{{radarChartData[0].data[2]}} V</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div class="description-block">
+                        <span class="description-percentage text-green">ADC3</span>
+                        <h5 class="description-header">{{radarChartData[0].data[1]}} V</h5>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
     </div>
 </section>

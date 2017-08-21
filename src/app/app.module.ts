@@ -21,7 +21,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { SensorComponent } from './pages/sensor/sensor.component';
 import { LineComponent } from './pages/chart/line/line.component';
 import { BarComponent } from './pages/chart/bar/bar.component';
-import { DoughnutComponent } from './pages/chart/doughnut/doughnut.component';
 import { RadarComponent } from './pages/chart/radar/radar.component';
 import { ControlComponent } from './pages/control/control.component';
 
@@ -33,7 +32,6 @@ import { ControlComponent } from './pages/control/control.component';
     SensorComponent,
     LineComponent,
     BarComponent,
-    DoughnutComponent,
     RadarComponent,
     ControlComponent
   ],
