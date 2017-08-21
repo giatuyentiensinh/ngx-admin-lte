@@ -3,7 +3,8 @@
         <div class="box-header with-border">
             <h3 class="box-title">Temperature</h3>
             <div class="box-tools pull-right">
-                <span class="label label-danger">{{datas.length}} records</span>
+                <span class="label label-info">Min {{min_temp / 10}} °C</span>
+                <span class="label label-danger">Max {{max_temp / 10}} °C</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">
@@ -56,7 +57,8 @@
         <div class="box-header with-border">
             <h3 class="box-title">Humidity</h3>
             <div class="box-tools pull-right">
-                <span class="label label-info">{{datas.length}} records</span>
+                <span class="label label-info">Min {{min_humi / 10}} %</span>
+                <span class="label label-danger">Max {{max_humi / 10}} %</span>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Detail" data-widget="chat-pane-toggle">

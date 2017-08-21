@@ -58,7 +58,7 @@ export class ControlComponent implements OnInit {
     this.searchProcess = true;
     this.sensorIp = null;
     this.rest.searchIp(this.searchIp).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.sensorIps = res;
       this.searchProcess = false;
     });
