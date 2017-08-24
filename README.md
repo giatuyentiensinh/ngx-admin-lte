@@ -27,4 +27,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Or you and run `npm build {path}`.
 
+e.g: `npm build {OM2M_PATH}/org.eclipse.om2m.webapp.resourcesbrowser.ui/src/main/resources/webapps/`
+
+## Demo
+
+![Demo image](./demo.png)
+
 # Auth: Tuyenng
