@@ -10,7 +10,7 @@ const UI_SWITCH_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ui-switch',
   templateUrl: './ui-switch.component.html',
-  styleUrls: ['./ui-switch.component.css'],  
+  styleUrls: ['./ui-switch.component.css'],
   providers: [UI_SWITCH_CONTROL_VALUE_ACCESSOR]
 })
 export class UiSwitchComponent implements ControlValueAccessor {
@@ -56,18 +56,26 @@ export class UiSwitchComponent implements ControlValueAccessor {
   defaultBoColor: string = '#dfdfdf';
 
   getColor(flag) {
-    if (flag === 'borderColor') return this.defaultBoColor;
+    if (flag === 'borderColor') {
+      return this.defaultBoColor;
+    }
     if (flag === 'switchColor') {
-      if (this.reverse) return !this.checked ? this.switchColor : this.switchOffColor || this.switchColor;
+      if (this.reverse) {
+        return !this.checked ? this.switchColor : this.switchOffColor || this.switchColor;
+      }
       return this.checked ? this.switchColor : this.switchOffColor || this.switchColor;
     }
-    if (this.reverse)  return !this.checked ? this.color : this.defaultBgColor;
+    if (this.reverse) {
+      return !this.checked ? this.color : this.defaultBgColor;
+    }
     return this.checked ? this.color : this.defaultBgColor;
   }
 
   @HostListener('click')
   onToggle() {
-    if (this.disabled) return;
+    if (this.disabled) {
+      return;
+    }
     this.checked = !this.checked;
     this.change.emit(this.checked);
     this.onChangeCallback(this.checked);

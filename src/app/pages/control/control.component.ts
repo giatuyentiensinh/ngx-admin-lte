@@ -9,12 +9,12 @@ import { BreadcrumbService, NotificationService, RestService } from '../../ngx-a
 })
 export class ControlComponent implements OnInit {
 
-  searchProcess: boolean = true;
+  searchProcess = true;
 
-  redStatus: boolean = false;
-  greenStatus: boolean = false;
-  blueStatus: boolean = false;
-  obsStatus: boolean = false;
+  redStatus = false;
+  greenStatus = false;
+  blueStatus = false;
+  obsStatus = false;
 
   searchIp: string;
   sensorIps: string[] = [];
@@ -66,32 +66,35 @@ export class ControlComponent implements OnInit {
 
   toggleRedLed() {
     this.redStatus = !this.redStatus;
-    if (this.redStatus)
+    if (this.redStatus) {
       this.rest.controlObj('setOnLebRed&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Red led is turn on', 'Notification'));
-    else
+    } else {
       this.rest.controlObj('setOffLebRed&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Red led is turn off', 'Notification'));
+    }
   }
 
   toggleGreenLed() {
     this.greenStatus = !this.greenStatus;
-    if (this.greenStatus)
+    if (this.greenStatus) {
       this.rest.controlObj('setOnLebGreen&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Green led is turn on', 'Notification'));
-    else
+    } else {
       this.rest.controlObj('setOffLebGreen&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Green led is turn off', 'Notification'));
+    }
   }
 
   toggleBlueLed() {
     this.blueStatus = !this.blueStatus;
-    if (this.blueStatus)
+    if (this.blueStatus) {
       this.rest.controlObj('setOnLebBlue&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Blue led is turn on', 'Notification'));
-    else
+    } else {
       this.rest.controlObj('setOffLebBlue&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('The Blue led is turn off', 'Notification'));
+    }
   }
 
   toggleGPIO() {
@@ -101,12 +104,13 @@ export class ControlComponent implements OnInit {
 
   toggleObsBtn() {
     this.obsStatus = !this.obsStatus;
-    if (this.obsStatus)
+    if (this.obsStatus) {
       this.rest.controlObj('observeBtnActive&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('Observer button is turn on', 'Notification'));
-    else
+    } else {
       this.rest.controlObj('observeBtnCancel&addr=' + this.sensorIp)
         .subscribe(res => this.noServ.success('Observer button is turn off', 'Notification'));
+    }
   }
 
   selectIp(ip) {

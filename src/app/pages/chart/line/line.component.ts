@@ -3,8 +3,8 @@ import { DatePipe } from '@angular/common';
 import { NotificationService, RestService } from '../../../ngx-admin-lte/index';
 import { Subscription } from 'rxjs/Subscription';
 
-const MAX_RECORDS: number = 20;
-const CHECKTEMP: number = 30 * 10;
+const MAX_RECORDS = 20;
+const CHECKTEMP = 30 * 10;
 
 @Component({
   selector: 'chart-line',
@@ -35,16 +35,16 @@ export class LineComponent implements OnInit, OnDestroy {
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }];
-  public lineChartLegend: boolean = true;
-  public lineChartType: string = 'line';
+  public lineChartLegend = true;
+  public lineChartType = 'line';
 
   // data
   public datas: any[] = [];
   private subscribe: Subscription;
-  private max_temp: number = 0;
-  private min_temp: number = 0;
-  private max_humi: number = 0;
-  private min_humi: number = 0;
+  private max_temp = 0;
+  private min_temp = 0;
+  private max_humi = 0;
+  private min_humi = 0;
 
   constructor(private noServ: NotificationService,
     public rest: RestService,
@@ -52,9 +52,9 @@ export class LineComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.rest.getAllData('RE-Mote').subscribe(res => {
-      let datastemp: number[] = [];
-      let datashumi: number[] = [];
-      let times: any[] = [];
+      const datastemp: number[] = [];
+      const datashumi: number[] = [];
+      const times: any[] = [];
       res = res.slice(res.length - MAX_RECORDS, res.length - 1);
       this.datas = res;
       res.map(item => {
@@ -104,8 +104,9 @@ export class LineComponent implements OnInit, OnDestroy {
   }
 
   private updateMaxMin(): void {
-    if (this.datas.length < 0) return;
-
+    if (this.datas.length < 0) {
+      return;
+    }
     this.max_temp = Math.max.apply(Math, this.datas.map(function(data) { return data.sensor_temperature; }));
     this.min_temp = Math.min.apply(Math, this.datas.map(function(data) { return data.sensor_temperature; }));
     this.max_humi = Math.max.apply(Math, this.datas.map(function(data) { return data.sensor_humidity; }));
@@ -113,8 +114,9 @@ export class LineComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscribe)
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
+    }
   }
 
 }

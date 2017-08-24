@@ -21,10 +21,10 @@ export class RestService {
 
   constructor(private http: Http, private socket: IO) {
 
-    this.onMsgNews = new ioEvent("msg");
+    this.onMsgNews = new ioEvent('msg');
     this.socket.listenToEvent(this.onMsgNews);
-    this.onObsBtn = new ioEvent("obj");
-    this.socket.listenToEvent(this.onObsBtn);    
+    this.onObsBtn = new ioEvent('obj');
+    this.socket.listenToEvent(this.onObsBtn);
     this.socket.connect('http://' + window.location.hostname + ':9092');
 
     // this.modelName = 'in-cse/in-name'; // for dev
@@ -70,10 +70,11 @@ export class RestService {
       headers: this.headers
     })
       .map(res => {
-        let ips = [];
+        const ips = [];
         xml2js.parseString(res['_body'], function(err, param) {
-          for (let e of param.obj.str)
+          for (const e of param.obj.str) {
             ips.push(e['$'].val);
+          }
         });
         return ips;
       })
@@ -85,25 +86,32 @@ export class RestService {
       headers: this.headers
     })
       .map(res => {
-        let xml = res.json()['m2m:cin'].con;
+        const xml = res.json()['m2m:cin'].con;
         let result;
         let adc1, adc2, adc3, battery, temperature, sensor_temperature, sensor_humidity;
         xml2js.parseString(xml, function(err, param) {
-          for (let item of param.obj.int) {
-            if ('adc1' === item['$'].name)
+          for (const item of param.obj.int) {
+            if ('adc1' === item['$'].name) {
               adc1 = item['$'].val;
-            if ('adc2' === item['$'].name)
+            }
+            if ('adc2' === item['$'].name) {
               adc2 = item['$'].val;
-            if ('adc3' === item['$'].name)
+            }
+            if ('adc3' === item['$'].name) {
               adc3 = item['$'].val;
-            if ('battery' === item['$'].name)
+            }
+            if ('battery' === item['$'].name) {
               battery = item['$'].val;
-            if ('temperature' === item['$'].name)
+            }
+            if ('temperature' === item['$'].name) {
               temperature = item['$'].val;
-            if ('sensor_temperature' === item['$'].name)
+            }
+            if ('sensor_temperature' === item['$'].name) {
               sensor_temperature = item['$'].val;
-            if ('sensor_humidity' === item['$'].name)
+            }
+            if ('sensor_humidity' === item['$'].name) {
               sensor_humidity = item['$'].val;
+            }
           }
           result = {
             adc1: adc1,
@@ -125,28 +133,38 @@ export class RestService {
       headers: this.headers
     })
       .map(res => {
-        let xml = res.json()['m2m:cnt']['cin'];
-        let result: any[] = [];
-        for (let e of xml) {
+        const xml = res.json()['m2m:cnt']['cin'];
+        const result: any[] = [];
+        for (const e of xml) {
           xml2js.parseString(e.con, function(err, param) {
             let adc1, adc2, adc3, battery, temperature, sensor_temperature, sensor_humidity, addr, time;
-            for (let item of param.obj.int) {
-              if ('adc1' === item['$'].name) {
-                adc1 = item['$'].val;
-                time = e.lt;
+            for (const item of param.obj.int) {
+              switch (item['$'].name) {
+                case 'adc1':
+                  adc1 = item['$'].val;
+                  time = e.lt;
+                  break;
+                case 'adc2':
+                  adc2 = item['$'].val;
+                  break;
+                case 'adc3':
+                  adc3 = item['$'].val;
+                  break;
+                case 'battery':
+                  battery = item['$'].val;
+                  break;
+                case 'temperature':
+                  temperature = item['$'].val;
+                  break;
+                case 'sensor_temperature':
+                  sensor_temperature = item['$'].val;
+                  break;
+                case 'sensor_humidity':
+                  sensor_humidity = item['$'].val;
+                  break;
+                default:
+                  break;
               }
-              else if ('adc2' === item['$'].name)
-                adc2 = item['$'].val;
-              else if ('adc3' === item['$'].name)
-                adc3 = item['$'].val;
-              else if ('battery' === item['$'].name)
-                battery = item['$'].val;
-              else if ('temperature' === item['$'].name)
-                temperature = item['$'].val;
-              else if ('sensor_temperature' === item['$'].name)
-                sensor_temperature = item['$'].val;
-              else if ('sensor_humidity' === item['$'].name)
-                sensor_humidity = item['$'].val;
               addr = param.obj.str[0]['$'].val;
             }
             result.push({

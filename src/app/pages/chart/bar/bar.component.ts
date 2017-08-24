@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { RestService } from '../../../ngx-admin-lte/index';
 import { Subscription } from 'rxjs/Subscription';
 
-const MAX_RECORDS: number = 20;
+const MAX_RECORDS = 20;
 
 @Component({
   selector: 'chart-bar',
@@ -16,27 +16,28 @@ export class BarComponent implements OnInit, OnDestroy {
   public barChartDataBattery: any[] = [];
   public datas: any[] = [];
 
-  public loadDataProcess: boolean = true;
-
-  constructor(public rest: RestService,
-    private datePipe: DatePipe) { }
+  public loadDataProcess = true;
+  private subscribe: Subscription;
 
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
+  public barChartType = 'bar';
+  public barChartLegend = true;
 
-  private subscribe: Subscription;
+
+  constructor(public rest: RestService,
+    private datePipe: DatePipe) { }
+
 
   public ngOnInit() {
     this.loadDataProcess = true;
     this.rest.getAllData('RE-Mote').subscribe(res => {
-      let adc1s: number[] = [];
-      let adc3s: number[] = [];
-      let battery: number[] = [];
-      let times: any[] = [];
+      const adc1s: number[] = [];
+      const adc3s: number[] = [];
+      const battery: number[] = [];
+      const times: any[] = [];
       res = res.slice(0, MAX_RECORDS);
       res.map(item => {
         adc1s.push(item.adc1 / 1000);
@@ -63,7 +64,10 @@ export class BarComponent implements OnInit, OnDestroy {
         this.barChartDataADC[1].data.push(data.adc3 / 1000);
         this.barChartDataBattery[0].data.push(data.battery / 1000);
         this.barChartLabels.push(this.datePipe.transform(new Date(), 'mm:ss'));
-        this.barChartDataADC = [{ data: this.barChartDataADC[0].data, label: 'ADC1' }, { data: this.barChartDataADC[1].data, label: 'ADC3' }];
+        this.barChartDataADC = [
+          { data: this.barChartDataADC[0].data, label: 'ADC1' },
+          { data: this.barChartDataADC[1].data, label: 'ADC3' }
+        ];
         this.barChartDataBattery = [{ data: this.barChartDataBattery[0].data, label: 'Battery' }];
         this.datas.unshift({
           time: new Date(),
@@ -78,7 +82,8 @@ export class BarComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.subscribe)
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
+    }
   }
 }

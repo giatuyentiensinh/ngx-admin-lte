@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/user';
-import {UserService} from '../../services/user.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,17 +11,17 @@ import { Router } from '@angular/router';
   templateUrl: './user-box.component.html'
 })
 export class UserBoxComponent implements OnInit {
-  //default user
-  private currentUser: User =  new User({
-      avatarUrl: 'public/assets/img/user2-160x160.jpg',
-      email: 'weber.antoine.pro@gmail.com',
-      firstname: 'WEBER',
-      lastname: 'Antoine'
+
+  private currentUser: User = new User({
+    avatarUrl: '',
+    email: 'giatuyentiensinh@gmail.com',
+    firstname: 'Tuyen',
+    lastname: 'Nguyen'
   });
 
   constructor(private userServ: UserService, private router: Router) {
     // se connecter au modif du user courant
-      this.userServ.currentUser.subscribe((user: User) => this.currentUser = user);
+    this.userServ.currentUser.subscribe((user: User) => this.currentUser = user);
   }
 
   public ngOnInit() {

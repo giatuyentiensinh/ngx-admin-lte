@@ -27,7 +27,7 @@ describe('Component: AppHeader', () => {
   it('should create the component', inject([], () => {
     return builder.createAsync(AppHeaderComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(AppHeaderComponent));
+        const query = fixture.debugElement.query(By.directive(AppHeaderComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });

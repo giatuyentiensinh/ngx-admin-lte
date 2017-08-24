@@ -72,7 +72,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           time: new Date()
         });
       });
-      
       this.rest.streamObserveCoAP().subscribe(data => {
         this.notification.success(data, 'CoAP Observe');
       });
@@ -82,7 +81,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this.breadServ.clear();
-    if (this.subscribe)
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
+    }
   }
 }
