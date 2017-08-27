@@ -74,6 +74,7 @@ export class LineComponent implements OnInit, OnDestroy {
       }
 
       this.subscribe = this.rest.streamIO().subscribe(data => {
+
         if (this.lineChartDataTemp[0].data.length > MAX_RECORDS) {
           this.lineChartLabels.shift();
           this.lineChartDataHumi[0].data.shift();
@@ -83,6 +84,7 @@ export class LineComponent implements OnInit, OnDestroy {
 
         this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
         this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
+
         this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
         this.datas.push({
           sensor_humidity: data.sensor_humidity,
@@ -98,6 +100,8 @@ export class LineComponent implements OnInit, OnDestroy {
 
         this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
         this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
+      }, err => {
+        localStorage.removeItem('rest_all_om2m');
       });
     });
 

@@ -52,69 +52,124 @@ export class ControlComponent implements OnInit {
         }
       ]
     });
+
+    const json = localStorage.getItem('rest_all_ips');
+    if (json) {
+      this.sensorIps = JSON.parse(json).data;
+      this.searchProcess = false;
+    }
   }
 
-  searchIP() {
+  public searchIP() {
     this.searchProcess = true;
     this.sensorIp = null;
     this.rest.searchIp(this.searchIp).subscribe(res => {
-      // console.log(res);
       this.sensorIps = res;
       this.searchProcess = false;
-    });
+      localStorage.setItem('rest_all_ips', JSON.stringify({ data: this.sensorIps, date: Date.now() }));
+    }, err => this.noServ.error('Something wrong', 'Error'));
+    // this.searchProcess = true;
+    // this.sensorIp = null;
+    // this.sensorIps = [
+    //   'aaaa::212:4b00:9df:4f53'
+    // ];
+    // this.searchProcess = false;
+    // localStorage.setItem('rest_all_ips', JSON.stringify({ data: this.sensorIps, date: Date.now() }));
   }
 
-  toggleRedLed() {
+  public toggleRedLed() {
     this.redStatus = !this.redStatus;
     if (this.redStatus) {
       this.rest.controlObj('setOnLebRed&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Red led is turn on', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Red led is turn on', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     } else {
       this.rest.controlObj('setOffLebRed&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Red led is turn off', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Red led is turn off', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     }
   }
 
-  toggleGreenLed() {
+  public toggleGreenLed() {
     this.greenStatus = !this.greenStatus;
     if (this.greenStatus) {
       this.rest.controlObj('setOnLebGreen&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Green led is turn on', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Green led is turn on', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     } else {
       this.rest.controlObj('setOffLebGreen&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Green led is turn off', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Green led is turn off', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     }
   }
 
-  toggleBlueLed() {
+  public toggleBlueLed() {
     this.blueStatus = !this.blueStatus;
     if (this.blueStatus) {
       this.rest.controlObj('setOnLebBlue&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Blue led is turn on', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Blue led is turn on', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     } else {
       this.rest.controlObj('setOffLebBlue&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('The Blue led is turn off', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('The Blue led is turn off', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     }
   }
 
-  toggleGPIO() {
+  public toggleGPIO() {
     this.rest.controlObj('gpio&addr=' + this.sensorIp)
-      .subscribe(res => this.noServ.success('Request success', 'Notification'));
+      .subscribe(res => {
+        this.noServ.success('Request success', 'Notification')
+      }, err => {
+        this.noServ.error('Something wrong', 'Error');
+      });
   }
 
-  toggleObsBtn() {
+  public toggleObsBtn() {
     this.obsStatus = !this.obsStatus;
     if (this.obsStatus) {
       this.rest.controlObj('observeBtnActive&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('Observer button is turn on', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('Observer button is turn on', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     } else {
       this.rest.controlObj('observeBtnCancel&addr=' + this.sensorIp)
-        .subscribe(res => this.noServ.success('Observer button is turn off', 'Notification'));
+        .subscribe(res => {
+          this.noServ.success('Observer button is turn off', 'Notification')
+        }, err => {
+          this.noServ.error('Something wrong', 'Error');
+        });
     }
   }
 
-  selectIp(ip) {
+  public selectIp(ip) {
     this.sensorIp = ip;
+  }
+
+  public cleanCache() {
+    localStorage.removeItem('rest_all_ips');
+    this.sensorIp = null;
+    this.sensorIps = [];
   }
 
 }

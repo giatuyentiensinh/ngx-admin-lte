@@ -9,6 +9,7 @@
                     <ng2-completer [(ngModel)]="searchIp" [datasource]="dataService" [minSearchLength]="0" class="completer-input" placeholder="input ip of border router"></ng2-completer>
                     <div class="input-group-btn">
                         <button [disabled]="!searchIp" (click)="searchIP()" type="button" class="btn btn-primary btn-flat">Search</button>
+                        <button (click)="cleanCache()" type="button" class="btn btn-default btn-flat">RM IPs</button>
                     </div>
                 </div>
             </div>

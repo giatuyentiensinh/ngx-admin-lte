@@ -15,7 +15,7 @@ import { UiSwitchModule } from './ui-switch/ui-switch.module';
 import { RestService } from './ngx-admin-lte/index';
 import { IO } from 'rxjs-socket.io';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2CompleterModule } from "ng2-completer";
+import { Ng2CompleterModule } from 'ng2-completer';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SensorComponent } from './pages/sensor/sensor.component';

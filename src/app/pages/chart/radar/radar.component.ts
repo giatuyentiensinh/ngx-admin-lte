@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RestService } from '../../../ngx-admin-lte/index';
+import { RestService, NotificationService } from '../../../ngx-admin-lte/index';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -16,7 +16,8 @@ export class RadarComponent implements OnInit, OnDestroy {
 
   private subscribe: Subscription;
 
-  constructor(public rest: RestService) { }
+  constructor(private notification: NotificationService,
+    public rest: RestService) { }
 
   ngOnInit() {
     this.rest.getFirstData('RE-Mote').subscribe(res => {
@@ -28,7 +29,11 @@ export class RadarComponent implements OnInit, OnDestroy {
         ],
         label: 'RE-Mote'
       }];
+    }, err => {
+      console.error(err);
+      this.notification.error(err, 'Error');
     });
+
     this.subscribe = this.rest.streamIO().subscribe(data => {
       this.radarChartData = [{
         data: [

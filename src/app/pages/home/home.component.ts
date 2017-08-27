@@ -72,9 +72,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           time: new Date()
         });
       });
-      this.rest.streamObserveCoAP().subscribe(data => {
-        this.notification.success(data, 'CoAP Observe');
-      });
+    }, err => {
+      this.notification.error(err, 'Error');
+    });
+
+    this.rest.streamObserveCoAP().subscribe(data => {
+      this.notification.success(JSON.stringify(data), 'CoAP Observe');
     });
 
   }

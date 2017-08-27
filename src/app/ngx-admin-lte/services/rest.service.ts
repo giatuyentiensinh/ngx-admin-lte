@@ -110,7 +110,12 @@ export class RestService {
         });
         return result;
       })
-      .catch(this.handleError);
+      .catch(err => {
+        if (err.status === 404) {
+          return Observable.throw('First data not fould in RE-Mote/DATA');
+        }
+        return Observable.throw(err.json().error);
+      });
   }
 
 
@@ -181,7 +186,12 @@ export class RestService {
         localStorage.setItem('rest_all_om2m', JSON.stringify({ data: result, date: Date.now() }));
         return result;
       })
-      .catch(this.handleError);
+      .catch(err => {
+        if (err.message === 'xml_1 is undefined') {
+          return Observable.throw('RE-Mote/DATA is empty');
+        }
+        return Observable.throw(err.json().error)
+      });
   }
 
   private handleError(error: Response) {
