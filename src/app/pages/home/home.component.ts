@@ -87,5 +87,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.subscribe) {
       this.subscribe.unsubscribe();
     }
+    const json = localStorage.getItem('rest_all_om2m');
+    if (json) {
+      localStorage.setItem('rest_all_om2m', JSON.stringify({
+       data: this.datas,
+       date: JSON.parse(localStorage.getItem('rest_all_om2m')).date
+      }));
+      // console.log(JSON.parse(localStorage.getItem('rest_all_om2m')).data.length);
+    }
   }
 }

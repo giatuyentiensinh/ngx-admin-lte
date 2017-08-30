@@ -127,7 +127,7 @@ export class RestService {
     const cacheTime = 2 * 60000;
     if (json) {
       const obj = JSON.parse(json);
-      if (Date.now() - obj.date < cacheTime) {
+      if (Date.now() - obj.date < cacheTime && obj.data.length > 20) {
         return Observable.of(obj.data);
       }
     }
