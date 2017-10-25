@@ -7,6 +7,7 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --base-href=\"/iotworkshop/hust/index.html\" --output-path",
     "prod": "ng build env=--prod --base-href=\"/iotworkshop/hust/index.html\" --output-path",
+    "prod2": "ng build env=--prod --base-href=\"/tuyenng/hust/index.html\" --output-path",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

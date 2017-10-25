@@ -75,31 +75,35 @@ export class LineComponent implements OnInit, OnDestroy {
 
       this.subscribe = this.rest.streamIO().subscribe(data => {
 
-        if (this.lineChartDataTemp[0].data.length > MAX_RECORDS) {
-          this.lineChartLabels.shift();
-          this.lineChartDataHumi[0].data.shift();
-          this.lineChartDataTemp[0].data.shift();
-          this.datas.shift();
+        if (this.lineChartDataTemp.length > 0) {
+
+          if (this.lineChartDataTemp[0].data.length > MAX_RECORDS) {
+            this.lineChartLabels.shift();
+            this.lineChartDataHumi[0].data.shift();
+            this.lineChartDataTemp[0].data.shift();
+            this.datas.shift();
+          }
+
+          this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
+          this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
+
+          this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
+          this.datas.push({
+            sensor_humidity: data.sensor_humidity,
+            sensor_temperature: data.sensor_temperature,
+            time: new Date()
+          });
+
+          if (data.sensor_temperature > CHECKTEMP) {
+            this.noServ.warning('Temperature is ' + data.sensor_temperature / 10 + ' °C', 'Warning! Too hot');
+          }
+
+          this.updateMaxMin();
+
+          this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
+          this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
         }
 
-        this.lineChartDataTemp[0].data.push(data.sensor_temperature / 10);
-        this.lineChartDataHumi[0].data.push(data.sensor_humidity / 10);
-
-        this.lineChartLabels.push(this.datePipe.transform(new Date(), 'hh:mm:ss'));
-        this.datas.push({
-          sensor_humidity: data.sensor_humidity,
-          sensor_temperature: data.sensor_temperature,
-          time: new Date()
-        });
-
-        if (data.sensor_temperature > CHECKTEMP) {
-          this.noServ.warning('Temperature is ' + data.sensor_temperature / 10 + ' °C', 'Warning! Too hot');
-        }
-
-        this.updateMaxMin();
-
-        this.lineChartDataTemp = [{ data: this.lineChartDataTemp[0].data, label: 'Temperature sensor (°C)' }];
-        this.lineChartDataHumi = [{ data: this.lineChartDataHumi[0].data, label: 'Humidity sensor (%)' }];
       }, err => {
         localStorage.removeItem('rest_all_om2m');
       });
