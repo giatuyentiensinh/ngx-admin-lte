@@ -7,14 +7,14 @@ import { BreadcrumbService } from '../../services/breadcrumb.service';
   templateUrl: './breadcrumb.component.html'
 })
 export class BreadcrumbComponent {
-  private display = false;
-  private header = '';
-  private description = '';
-  private levels: Array<any> = [];
+  public display = false;
+  public header = '';
+  public description = '';
+  public levels: Array<any> = [];
 
   constructor(private breadServ: BreadcrumbService) {
     // getting the data from the services
-    this.breadServ.current.subscribe((data) => {
+    this.breadServ.getCurrent().subscribe((data) => {
       this.display = data.display;
       this.header = data.header;
       this.description = data.description;

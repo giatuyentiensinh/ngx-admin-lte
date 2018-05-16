@@ -23,12 +23,16 @@ export class BreadcrumbService {
     this.clear();
   }
 
-  public set(data: any) {
+  public setCurrent(data: any) {
     this.current.next(data);
   }
 
+  public getCurrent() {
+    return this.current;
+  }
+
   public clear() {
-    this.set(this.initialData);
+    this.setCurrent(this.initialData);
   }
 
 }

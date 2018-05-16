@@ -12,8 +12,8 @@ export * from './src/services/logger.service';
 import { MessagesService } from './src/services/messages.service';
 export * from './src/services/messages.service';
 
-import { NotificationService } from './src/services/notification.service';
-export * from './src/services/notification.service';
+import { NotificationsService } from './src/services/notifications.service';
+export * from './src/services/notifications.service';
 
 import { RestService } from './src/services/rest.service';
 export * from './src/services/rest.service';
@@ -30,6 +30,9 @@ export * from './src/services/menu.service';
 import { LogoService } from './src/services/logo.service';
 export * from './src/services/logo.service';
 
+import { FooterService } from './src/services/footer.service';
+export * from './src/services/footer.service';
+
 // layouts
 import { LayoutAuthComponent } from './src/layouts/auth/auth';
 export * from './src/layouts/auth/auth';
@@ -40,7 +43,6 @@ export * from './src/layouts/login/login.component';
 import { LayoutRegisterComponent } from './src/layouts/register/register.component';
 export * from './src/layouts/register/register.component';
 
-
 // models
 import { Message } from './src/models/message';
 export * from './src/models/message';
@@ -50,6 +52,9 @@ export * from './src/models/preferencies';
 
 import { User } from './src/models/user';
 export * from './src/models/user';
+
+import { Notification } from './src/models/notification';
+export * from './src/models/notification';
 
 import { NgxAdminLteModule } from './src/ngx-admin-lte.module';
 export { NgxAdminLteModule } from './src/ngx-admin-lte.module';

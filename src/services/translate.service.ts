@@ -2,9 +2,11 @@ import { Injectable, OnInit } from '@angular/core';
 import { TranslateService as NGXTranslateService } from '@ngx-translate/core';
 import { UserService } from './user.service';
 import { User } from '../models/user';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
-const langs = ['en', 'fr', 'ru', 'he', 'zh'];
-const langmatch = /en|fr|ru|he|zh/;
+const langs = ['en', 'fr', 'ru', 'he', 'zh', 'pt', 'it'];
+const langmatch = /en|fr|ru|he|zh|pt|it/;
 
 @Injectable()
 export class TranslateService implements OnInit {
@@ -16,7 +18,7 @@ export class TranslateService implements OnInit {
         // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang( 'en' );
 
-        this.userServ.currentUser.subscribe(( user: User ) => {
+        this.userServ.getCurrent().subscribe(( user: User ) => {
             this.currentUser = user;
 
             // the lang to use, if the lang isn't available, it will use the current loader to get them

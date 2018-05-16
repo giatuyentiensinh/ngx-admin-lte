@@ -3,8 +3,8 @@
 	<!-- sidebar: style can be found in sidebar.less -->
 	<section class="sidebar" >
 		<!-- Sidebar user panel (optional) -->
-		<div class="user-panel">
-			<div class="pull-left image">
+		<div *ngIf="display_menu_user" class="user-panel">
+			<div class="pull-left image" *ngIf="currentUser?.avatarUrl" >
 				<img [src]="currentUser?.avatarUrl" class="img-circle"
 					[alt]="currentUser?.getName()">
 			</div>
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<!-- search form (Optional) -->
-		<form action="#" method="get" class="sidebar-form">
+		<form *ngIf="display_menu_search" action="#" method="get" class="sidebar-form">
 			<div class="input-group">
 				<input type="text" name="q" class="form-control"
 					placeholder="Search..."> <span class="input-group-btn">
@@ -28,10 +28,25 @@
 		</form>
 		<!-- /.search form -->
 		<!-- Sidebar Menu -->
-		<ul class="sidebar-menu">
-			<li class="header">NAVIGATION</li>
+		<ul class="sidebar-menu" data-widget="tree">
+			<!-- DEPRECATED since 1.0.1 -->
+			<ng-container *ngIf="menu_title !== '' ">
+				<li class="header">{{menu_title}}</li>
+			</ng-container>
+			<!-- /DEPRECATED since 1.0.1 -->
 			<ng-container *ngFor="let item of links">
-				<ng-container *ngIf="!item.sublinks">
+				<!-- HEADER -->
+				<ng-container *ngIf="item.header">
+					<li class="header">{{item.header}}</li>
+				</ng-container>
+				<!-- COMPONENT -->
+				<ng-container *ngIf="item.class">
+					<li>
+						<app-component-loader [class_component]="item.class" [data]="item.data"></app-component-loader>
+					</li>
+				</ng-container>
+				<!-- LINK -->
+				<ng-container *ngIf="item.link">
 					<li [class.active]="item.link[0] === currentUrl">
 						<a *ngIf="!item.external" [routerLink]="item.link">
 							<i class="fa fa-{{item.icon}}"></i>
@@ -43,13 +58,16 @@
 						</a>
 					</li>
 				</ng-container>
-
+				<!-- LINK WITH SUBLINKS -->
 				<ng-container *ngIf="item.sublinks">
 					<li class="treeview">
 						<a href="#">
 							<i *ngIf="item.icon" class="fa fa-{{item.icon}}"></i>
 							<span>{{item.title}}</span>
-							<i class="fa fa-angle-left pull-right"></i>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+							<!--i class="fa fa-angle-left pull-right"></i-->
 						</a>
 						<ul class="treeview-menu">
 							<ng-container *ngFor="let subitem of item.sublinks">
@@ -66,9 +84,9 @@
 							</ng-container>
 						</ul>
 					</li>
-					</ng-container>
 				</ng-container>
-			</ul>
+			</ng-container>
+		</ul>
 		<!-- /.sidebar-menu -->
 	</section>
 	<!-- /.sidebar -->

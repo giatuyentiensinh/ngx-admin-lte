@@ -1,28 +1,37 @@
-<body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<app-header>{{ 'LOADING' | translate }} header...</app-header>
+<div class="wrapper">
+	<app-header
+		[display_messages]='display_messages'
+		[display_notifications]='display_notifications'
+		[display_tasks]='display_tasks'
+		[display_user]='display_user'
+		[display_control]='display_control'
+		[display_logout]='display_logout'
+		[header_components]='header_components'
+    >{{ 'LOADING' | translate }} header...</app-header>
+	<app-menu-aside
+	[links]="mylinks"
+	[display_menu_user]='display_menu_user'
+	[display_menu_search]='display_menu_search'
+	>{{ 'LOADING' | translate }} menu...</app-menu-aside>
 
-		<app-menu-aside [links]="mylinks">{{ 'LOADING' | translate }} menu...</app-menu-aside>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+		<app-breadcrumb></app-breadcrumb>
 
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
-			<app-breadcrumb></app-breadcrumb>
-
-			<!-- Main content -->
-			<section class="content">
-				<div class="box box-default">
-					<div class="box-body">
-						<router-outlet></router-outlet>
-					</div>
+		<!-- Main content -->
+		<section class="content">
+			<div [ngClass]="{'box': boxed_style, 'box-default': boxed_style}">
+				<div [ngClass]="{'box-body': boxed_style}">
+					<router-outlet></router-outlet>
 				</div>
-			</section>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
-		<app-footer>{{ 'LOADING' | translate }} footer...</app-footer>
-		<app-aside>{{ 'LOADING' | translate }} control sidebar...</app-aside>
+			</div>
+		</section>
+		<!-- /.content -->
 	</div>
-	<!-- ./wrapper -->
-</body>
+	<!-- /.content-wrapper -->
+	<app-footer>{{ 'LOADING' | translate }} footer...</app-footer>
+	<app-control-sidebar>{{ 'LOADING' | translate }} control sidebar...</app-control-sidebar>
+</div>
+<!-- ./wrapper -->

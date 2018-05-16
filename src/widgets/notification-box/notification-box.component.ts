@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../../models/message';
-import { MessagesService } from '../../services/messages.service';
+import { Notification } from '../../models/notification';
+import { NotificationsService } from '../../services/notifications.service';
+import { Http } from '@angular/http';
+import { TranslateService } from '@ngx-translate/core';
+import { LoggerService } from '../../services/logger.service';
 
 @Component( {
     /* tslint:disable */
@@ -11,13 +14,20 @@ import { MessagesService } from '../../services/messages.service';
 })
 export class NotificationBoxComponent implements OnInit {
 
-    private messages: Message[];
-    private notifLength: {} = {0: '10'};
+    public notifications: Notification[];
+    notifLength = { 0: 0 };
 
-    constructor() {}
+    constructor( private notifServ: NotificationsService, private logger: LoggerService ) {
+        this.notifications = [];
+    }
 
     public ngOnInit() {
-        // TODO
+        // Every incoming notification changes entire local notification Array.
+        this.notifServ.notifications.subscribe(( notif: Notification[] ) => {
+            this.logger.log( 'NotificationBox', null, 'RECEIVED.NOTIFICATION', null );
+            this.notifications = notif;
+            this.notifLength = { 0: this.notifications.length };
+        });
     }
 
 }

@@ -5,22 +5,31 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
-    public currentUser: ReplaySubject<User> = new ReplaySubject<User>( 1 );
+    private current: ReplaySubject<User> = new ReplaySubject<User>( 1 );
+
+    // Called when logout
+    public logoutAction: Function;
 
     constructor(
       private router: Router
-    ) {
-      // TODO
+    ) {}
+
+    public setCurrent( user: User ) {
+      this.current.next( user );
     }
 
-    public setCurrentUser( user: User ) {
-      this.currentUser.next( user );
+    public getCurrent() {
+      return this.current;
     }
 
     public logout() {
-      const user = new User();
-      user.connected = false;
-      this.setCurrentUser( user );
-      this.router.navigate(['login']);
+      if ( this.logoutAction ) {
+        this.logoutAction();
+      } else {
+        const user = new User();
+        user.connected = false;
+        this.setCurrent( user );
+        this.router.navigate(['login']);
+      }
     }
 }

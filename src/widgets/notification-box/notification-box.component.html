@@ -1,20 +1,24 @@
 <!-- Menu toggle button -->
-<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
-	class="fa fa-bell-o"></i> <span class="label label-warning">10</span>
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	<i class="fa fa-bell-o"></i>
+	<span class="label label-warning">{{ notifications.length }}</span>
 </a>
 <ul class="dropdown-menu">
 	<li class="header">{{ 'NOTIFBOX.COUNT' | translate:notifLength }}</li>
 	<li>
 		<!-- Inner Menu: contains the notifications -->
 		<ul class="menu">
-			<li>
-				<!-- start notification --> <a href="#"> <i
-					class="fa fa-users text-aqua"></i> 5 new members joined today
-			</a>
+			<li *ngFor="let notif of notifications.reverse(); let i = index">
+				<a routerLink="{{notif.link}}">
+					<i class="{{notif.class}}"></i> {{notif.content}}
+				</a>
 			</li>
 			<!-- end notification -->
 		</ul>
 	</li>
-	<li class="footer"><a href="#">{{ 'NOTIFBOX.FOOTER' |
-			translate }}</a></li>
+	<li class="footer">
+		<a href="#">
+			{{ 'NOTIFBOX.FOOTER' | translate }}
+		</a>
+	</li>
 </ul>

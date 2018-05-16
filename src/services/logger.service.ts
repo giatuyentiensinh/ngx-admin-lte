@@ -5,11 +5,10 @@ import { TranslateService } from './translate.service';
 @Injectable()
 export class LoggerService {
 
-    constructor( private translate: TranslateService ) {
-        // TODO
-    }
+    constructor( private translate: TranslateService ) {}
 
     public log( component: string, msg?: string, i18nRef?: string, data?: string[] ) {
+        // here we should test some environment config to show or not the log
         if ( true ) {
             if ( i18nRef ) {
                 let params: {} = {};
